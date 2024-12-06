@@ -78,9 +78,8 @@ class Event:
 
     # pylint: disable=too-many-instance-attributes
     # Events have lots of data that we need to save together
-
     def __init__(
-        self, title, group_name, description, location, time, url, status, uuid
+        self, *, title, group_name, description, location, time, url, status, uuid
     ):
         # pylint: disable=too-many-arguments
         self.title = title
