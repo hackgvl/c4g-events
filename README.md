@@ -145,6 +145,15 @@ good idea!
   `pyproject.toml`. This is only necessary if you're adding or removing a new
   dependency to the project.
 
+## Handy commands
+
+- `pip install .[test]`: Install test dependencies
+- `python -m black src/`: Format source files
+- `python -m isort --check src/`: sort imports with isort
+- `python -m ssort --check src/`: sorts python code
+- `python -m pylint src/`: Runs linter, try to get a 10/10 score!
+- `python -m pytest tests/`: Runs tests
+
 ## License
 
 This bot is licensed under the MIT license.
