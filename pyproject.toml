@@ -8,23 +8,23 @@ version = "0.1.0"
 authors = [{ name = "Olivia Sculley", email = "olivia@sculley.dev" }]
 keywords = ["automation", "black", "bolt", "bot", "pylint", "pytest", "slack"]
 dependencies = [
-  "aiohttp==3.9.3",
-  "fastapi==0.109.2",
-  "python_dateutil==2.8.2",
-  "pytz==2024.1",
-  "slack_bolt==1.18.1",
-  "uvicorn==0.27.0.post1",
+  "aiohttp==3.11.10",
+  "fastapi==0.115.6",
+  "python-dateutil==2.9.0.post0",
+  "pytz==2024.2",
+  "slack_bolt==1.21.3",
+  "uvicorn==0.32.1",
 ]
 
 [project.optional-dependencies]
 test = [
-  "black==24.1.1",
-  "httpx==0.26.0",
+  "black==24.10.0",
+  "httpx==0.28.0",
   "isort==5.13.2",
-  "pylint==3.0.3",
-  "pytest==7.4.4",
-  "pytest-asyncio==0.23.4",
-  "ssort==0.11.6",
+  "pylint==3.3.2",
+  "pytest==8.3.4",
+  "pytest-asyncio==0.24.0",
+  "ssort==0.14.0"
 ]
 
 [project.urls]
