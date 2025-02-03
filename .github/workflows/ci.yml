@@ -6,7 +6,9 @@ on:
 jobs:
   test:
     env:
-      SLACK_BOT_TOKEN: "fake"
+      CLIENT_ID: "fake_client"
+      CLIENT_SECRET: "fake_secret"
+      BOT_TOKEN: "fake"
       SIGNING_SECRET: "also_fake"
       TZ: "US/Eastern"
 
