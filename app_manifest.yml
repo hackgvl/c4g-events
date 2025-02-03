@@ -26,12 +26,12 @@ features:
       should_escape: false
 oauth_config:
   redirect_urls:
-    - https://data.openupstate.org/slack/auth
+    - https://hackgreenville.com/slack/auth
   scopes:
     bot:
-      - commands
       - chat:write
       - chat:write.public
+      - commands
       - incoming-webhook
       - users:read
 settings:
