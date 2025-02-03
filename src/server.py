@@ -6,6 +6,7 @@
 
 import asyncio
 import datetime
+import html
 import logging
 import os
 import re
@@ -17,11 +18,12 @@ from typing import Union
 import uvicorn
 from fastapi import HTTPException, Request
 from fastapi.responses import PlainTextResponse
+from slack_sdk.web import WebClient
 
 import database
 from auth import validate_slack_command_source
 from bot import periodically_check_api, periodically_delete_old_messages
-from config import API, SLACK_APP_HANDLER
+from config import API, AUTHORIZE_URL_GENERATOR, SLACK_APP_HANDLER, STATE_STORE
 
 
 async def identify_slack_team_domain(payload: bytes) -> Union[str, None]:
@@ -104,6 +106,46 @@ async def rate_limit_check_api(
         await update_check_api_cooldown(team_domain)
 
     return await call_next(req)
+
+
+@API.get("/slack/install")
+async def slack_install(req: Request):
+    """Generate an install button for new installation requests"""
+    del req
+    state = STATE_STORE.issue()
+    url = AUTHORIZE_URL_GENERATOR.generate(state)
+    return (
+        f'<a href="{html.escape(url)}">'
+        "<img "
+        'alt="Add to Slack" '
+        'height="40" '
+        'width="139" '
+        'src="https://platform.slack-edge.com/img/add_to_slack.png" '
+        'srcset="'
+        "https://platform.slack-edge.com/img/add_to_slack.png 1x, "
+        'https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" '
+        "/></a>"
+    )
+
+
+@API.get("/slack/auth")
+async def slack_auth(req: Request):
+    """Used for new Slack app installs for other orgs"""
+    if "code" in req.args:
+        if STATE_STORE.consume(req.args["state"]):
+            client = WebClient()
+            client.oauth_v2_access(
+                client_id=os.environ.get("CLIENT_ID"),
+                client_secret=os.environ.get("CLIENT_SECRET"),
+                redirect_uri=None,
+                code=req.args["code"],
+            )
+            return "The HackGreenville API bot has been installed successfully!"
+    error = req.args["error"] if "error" in req.args else ""
+    raise HTTPException(
+        status_code=400,
+        detail=f"Something is wrong with the installation (error: {html.escape(error)})",
+    )
 
 
 @API.post("/slack/events")

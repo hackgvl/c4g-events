@@ -13,6 +13,7 @@ dependencies = [
   "python-dateutil==2.9.0.post0",
   "pytz==2024.2",
   "slack_bolt==1.21.3",
+  "slack_sdk==3.34.0",
   "uvicorn==0.32.1",
 ]
 
