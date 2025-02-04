@@ -115,7 +115,8 @@ async def slack_install():
     state = STATE_STORE.issue()
     url = AUTHORIZE_URL_GENERATOR.generate(state)
 
-    return Response(f"""
+    return Response(
+        f"""
         <a href="{html.escape(url)}">
         <img alt="Add to Slack" height="40" width="139"
              src="https://platform.slack-edge.com/img/add_to_slack.png"
@@ -123,7 +124,8 @@ async def slack_install():
                      https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"
         />
         </a>
-    """)
+    """
+    )
 
 
 @API.get("/slack/auth")
